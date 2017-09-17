@@ -9,10 +9,10 @@ import BookShelves from './BookShelvesConfig';
  * @param {object} data          Book data
  * @param {func} onChangeShelf   Action to trigger when user wants to move book to different shelf
  */
-const BookShelfChanger = ({ book, onChangeShelf }) => {
-  return (
+const BookShelfChanger = ({ book, onChangeShelf }) =>
+  (
     <div className="book-shelf-changer">
-      <select value={(book.shelf || "none")} onChange={e => { onChangeShelf(book, e.target.value); }}>
+      <select value={(book.shelf || 'none')} onChange={e => { onChangeShelf(book, e.target.value); }}>
         <option value="" disabled>Move to...</option>
         {BookShelves.map(s =>
           <option value={s.key} key={s.key}>{s.name}</option>)
@@ -20,7 +20,6 @@ const BookShelfChanger = ({ book, onChangeShelf }) => {
       </select>
     </div>
   );
-};
 
 BookShelfChanger.defaultProps = {
   shelf: 'none',

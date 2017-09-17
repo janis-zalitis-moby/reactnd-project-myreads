@@ -18,7 +18,7 @@ class BookSearch extends Component {
     loading: false, // we're loading the search query results
     loaded: false, // query results have been loaded
   }
-  
+
   componentDidMount = () => this.searchInput.focus();
 
   /**
@@ -36,7 +36,7 @@ class BookSearch extends Component {
    * Fetches search results and updates state
    */
   searchBooks = () => {
-    this.setState({ loading: true })
+    this.setState({ loading: true });
     BooksAPI.search(this.state.query, 99).then(
       data => this.setState({ results: data, loading: false, loaded: true })
     );
@@ -45,7 +45,7 @@ class BookSearch extends Component {
   render() {
     const { results, loading, loaded } = this.state;
     const { books, onChangeShelf } = this.props;
-    
+
     const fallbackMessage = loading ? 'Searching..' : (loaded ? 'No books found. Try different search.' : 'Type to search.');
 
     return (
@@ -62,7 +62,7 @@ class BookSearch extends Component {
               you don't find a specific author or title. Every search is limited by search terms.
             */}
             <input
-              ref={(input) => { this.searchInput = input; }} 
+              ref={input => { this.searchInput = input; }}
               type="text"
               placeholder="Search by title or author"
               onChange={event => this.updateQuery(event.target.value)}
@@ -74,13 +74,13 @@ class BookSearch extends Component {
           <ol className="books-grid">
             {results.length // gives error if API response contains an error instead of data array
               ? results.map(book => {
-                  const myBook = books.find(b => b.id === book.id); // attempt to find the same in my shelf
-                  if (myBook) {
-                    // update shelf status from my own books
-                    book.shelf = myBook.shelf;
-                  }
-                  return <li key={book.id}><Book data={book} onChangeShelf={onChangeShelf} /></li>
-                })
+                const myBook = books.find(b => b.id === book.id); // attempt to find the same in my shelf
+                if (myBook) {
+                  // update shelf status from my own books
+                  book.shelf = myBook.shelf;
+                }
+                return <li key={book.id}><Book data={book} onChangeShelf={onChangeShelf} /></li>;
+              })
               : fallbackMessage
             }
           </ol>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import * as BooksAPI from './BooksAPI';
 import { Route } from 'react-router-dom';
+import * as BooksAPI from './BooksAPI';
 import './App.css';
 
 import BookList from './containers/BookList';
@@ -10,17 +10,9 @@ class BooksApp extends Component {
   state = {
     books: [],
   }
-  
+
   componentDidMount = () => this.fetchBooks();
-  
-  /**
-   * Re-fetches book data from API
-   */
-  fetchBooks = () =>
-    BooksAPI.getAll().then(
-      data => this.setState({ books: data })
-    );
-    
+
   /** 
    * Moves book to target shelf
    * @param  {object} book  book
@@ -30,30 +22,43 @@ class BooksApp extends Component {
     BooksAPI.update(book, shelf).then(
       () => this.fetchBooks()
     );
-  
+
+  /**
+   * Re-fetches book data from API
+   */
+  fetchBooks = () =>
+    BooksAPI.getAll().then(
+      data => this.setState({ books: data })
+    );
+
   render = () =>
-  (
-    <div className="app">
-      <Route
-        exact path="/"
-        render={() =>
-          <BookList
-            books={this.state.books}
-            onChangeShelf={this.onChangeShelf}
-          />
-        } 
-      />
-      <Route
-        path="/search"
-        render={() =>
-          <BookSearch
-            books={this.state.books}
-            onChangeShelf={this.onChangeShelf}
-          />
-        } 
-      />
-    </div>
-  );
+    (
+      <div className="app">
+        <Route
+          exact
+          path="/"
+          render={() =>
+            (
+              <BookList
+                books={this.state.books}
+                onChangeShelf={this.onChangeShelf}
+              />
+            )
+          }
+        />
+        <Route
+          path="/search"
+          render={() =>
+            (
+              <BookSearch
+                books={this.state.books}
+                onChangeShelf={this.onChangeShelf}
+              />
+            )
+          }
+        />
+      </div>
+    );
 }
 
 export default BooksApp;
