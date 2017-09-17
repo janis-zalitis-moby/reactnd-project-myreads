@@ -1,5 +1,8 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import './../App.css';
+
+import BookShelves from './BookShelvesConfig';
 
 /**
  * Selector used to move book between shelves
@@ -7,19 +10,12 @@ import './../App.css';
  * @param {func} onChangeShelf   Action to trigger when user wants to move book to different shelf
  */
 const BookShelfChanger = ({ book, onChangeShelf }) => {
-  const shelves = [
-    { value: 'currentlyReading', name: 'Currently Reading' },
-    { value: 'wantToRead', name: 'Want to Read' },
-    { value: 'read', name: 'Read' },
-    { value: 'none', name: 'None' },
-  ];
-
   return (
     <div className="book-shelf-changer">
       <select value={(book.shelf || "none")} onChange={e => { onChangeShelf(book, e.target.value); }}>
         <option value="" disabled>Move to...</option>
-        {shelves.map(s =>
-          <option value={s.value} key={s.value}>{s.name}</option>)
+        {BookShelves.map(s =>
+          <option value={s.key} key={s.key}>{s.name}</option>)
         }
       </select>
     </div>

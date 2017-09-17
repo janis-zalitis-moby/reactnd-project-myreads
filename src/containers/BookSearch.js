@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { debounce } from 'throttle-debounce';
 import * as BooksAPI from './../BooksAPI';
 import './../App.css';
 
@@ -12,38 +14,39 @@ import Book from '../components/Book';
 class BookSearch extends Component {
   state = {
     query: '',
-    books: [],
+    results: [],
+    loading: false, // we're loading the search query results
+    loaded: false, // query results have been loaded
   }
-
-  /** 
-   * Moves book to target shelf
-   * @param  {object} book  book
-   * @param  {string} shelf shelf(.value)
-   */
-  onChangeShelf = (book, shelf) =>
-    BooksAPI.update(book, shelf);
+  
+  componentDidMount = () => this.searchInput.focus();
 
   /**
    * Updates search query from user input
    * uses callback to start fetching results
    * @param  {string} query string the user has input
    */
-  updateQuery = query =>
+  updateQuery = debounce(400, query =>
     this.setState(
       { query: query.trim() },
-      () => this.updateBookData()
-    );
+      () => this.searchBooks()
+    ));
 
   /**
    * Fetches search results and updates state
    */
-  updateBookData = () =>
+  searchBooks = () => {
+    this.setState({ loading: true })
     BooksAPI.search(this.state.query, 99).then(
-      data => this.setState({ books: data })
+      data => this.setState({ results: data, loading: false, loaded: true })
     );
+  }
 
   render() {
-    const { books } = this.state;
+    const { results, loading, loaded } = this.state;
+    const { books, onChangeShelf } = this.props;
+    
+    const fallbackMessage = loading ? 'Searching..' : (loaded ? 'No books found. Try different search.' : 'Type to search.');
 
     return (
       <div className="search-books">
@@ -59,6 +62,7 @@ class BookSearch extends Component {
               you don't find a specific author or title. Every search is limited by search terms.
             */}
             <input
+              ref={(input) => { this.searchInput = input; }} 
               type="text"
               placeholder="Search by title or author"
               onChange={event => this.updateQuery(event.target.value)}
@@ -68,9 +72,16 @@ class BookSearch extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {books.length // gives error if API response contains an error instead of data array
-              ? books.map(book => <li key={book.id}><Book data={book} onChangeShelf={this.onChangeShelf} /></li>)
-              : null
+            {results.length // gives error if API response contains an error instead of data array
+              ? results.map(book => {
+                  const myBook = books.find(b => b.id === book.id); // attempt to find the same in my shelf
+                  if (myBook) {
+                    // update shelf status from my own books
+                    book.shelf = myBook.shelf;
+                  }
+                  return <li key={book.id}><Book data={book} onChangeShelf={onChangeShelf} /></li>
+                })
+              : fallbackMessage
             }
           </ol>
         </div>
@@ -78,5 +89,10 @@ class BookSearch extends Component {
     );
   }
 }
+
+BookSearch.propTypes = {
+  books: PropTypes.array.isRequired,
+  onChangeShelf: PropTypes.func.isRequired,
+};
 
 export default BookSearch;
