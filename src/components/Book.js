@@ -3,12 +3,17 @@ import './../App.css';
 
 import BookShelfChanger from './BookShelfChanger';
 
+/**
+ * Outputs a single book 
+ * @param {object} data          Book data
+ * @param {func} onChangeShelf   Action to trigger when user wants to move book to different shelf
+ */
 const Book = ({ data, onChangeShelf }) =>
   (
     <div className="book">
       <div className="book-top">
         <div className="book-cover" style={{ backgroundImage: `url("${data.imageLinks.smallThumbnail}")` }} />
-        <BookShelfChanger book={data} shelf={data.shelf} onChangeShelf={onChangeShelf} />
+        <BookShelfChanger book={data} onChangeShelf={onChangeShelf} />
       </div>
       <div className="book-title">{data.title}</div>
       {data.authors && data.authors.length // some books have no authors listed
