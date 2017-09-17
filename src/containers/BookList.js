@@ -15,7 +15,7 @@ import BookShelves from '../components/BookShelvesConfig';
  *  { read: "Read" }
  * ]
  */
-const BookList = ({ books, onChangeShelf }) => 
+const BookList = ({ books, onChangeShelf }) =>
   (
     <div className="list-books">
       <div className="list-books-title">
@@ -25,12 +25,12 @@ const BookList = ({ books, onChangeShelf }) =>
         <div className="list-books-content">
           <div>
             {BookShelves.filter(s => !s.hideShelf).map(s => (
-               <BookShelf
-                 title={s.name}
-                 key={s.key}
-                 books={books.filter(book => book.shelf === s.key)}
-                 onChangeShelf={onChangeShelf}
-               />
+              <BookShelf
+                title={s.name}
+                key={s.key}
+                books={books.filter(book => book.shelf === s.key)}
+                onChangeShelf={onChangeShelf}
+              />
             ))}
           </div>
         </div>
