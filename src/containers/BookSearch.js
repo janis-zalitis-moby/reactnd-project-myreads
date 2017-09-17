@@ -5,6 +5,10 @@ import './../App.css';
 
 import Book from '../components/Book';
 
+/**
+ * Outputs a page with search bar and results
+ * Searches in books and displays grid of results
+ */
 class BookSearch extends Component {
   state = {
     query: '',
@@ -19,12 +23,20 @@ class BookSearch extends Component {
   onChangeShelf = (book, shelf) =>
     BooksAPI.update(book, shelf);
 
+  /**
+   * Updates search query from user input
+   * uses callback to start fetching results
+   * @param  {string} query string the user has input
+   */
   updateQuery = query =>
     this.setState(
       { query: query.trim() },
       () => this.updateBookData()
     );
 
+  /**
+   * Fetches search results and updates state
+   */
   updateBookData = () =>
     BooksAPI.search(this.state.query, 99).then(
       data => this.setState({ books: data })

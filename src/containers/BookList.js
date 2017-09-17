@@ -5,6 +5,15 @@ import './../App.css';
 
 import BookShelf from '../components/BookShelf';
 
+/** 
+ * Outputs a page with a list of books split by shelves
+ * Uses pre-defined shelves:
+ * [
+ *  { currentlyReading: "Currently Reading" }
+ *  { wantToRead: "Want to Read" }
+ *  { read: "Read" }
+ * ]
+ */
 class BookList extends Component {
   state = {
     books: [],

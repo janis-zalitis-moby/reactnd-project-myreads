@@ -1,7 +1,12 @@
 import React, { PropTypes } from 'react';
 import './../App.css';
 
-const BookShelfChanger = ({ book, shelf, onChangeShelf }) => {
+/**
+ * Selector used to move book between shelves
+ * @param {object} data          Book data
+ * @param {func} onChangeShelf   Action to trigger when user wants to move book to different shelf
+ */
+const BookShelfChanger = ({ book, onChangeShelf }) => {
   const shelves = [
     { value: 'currentlyReading', name: 'Currently Reading' },
     { value: 'wantToRead', name: 'Want to Read' },
@@ -11,8 +16,8 @@ const BookShelfChanger = ({ book, shelf, onChangeShelf }) => {
 
   return (
     <div className="book-shelf-changer">
-      <select value={shelf} onChange={e => { onChangeShelf(book, e.target.value); }}>
-        <option value="none" disabled>Move to...</option>
+      <select value={(book.shelf || "none")} onChange={e => { onChangeShelf(book, e.target.value); }}>
+        <option value="" disabled>Move to...</option>
         {shelves.map(s =>
           <option value={s.value} key={s.value}>{s.name}</option>)
         }
