@@ -14,7 +14,7 @@ class BooksApp extends Component {
   componentDidMount = () => this.fetchBooks();
 
   /** 
-   * Moves book to target shelf
+   * @description Moves book to target shelf
    * @param  {object} book  book
    * @param  {string} shelf shelf(.value)
    */
@@ -24,7 +24,7 @@ class BooksApp extends Component {
     );
 
   /**
-   * Re-fetches book data from API
+   * @description Re-fetches book data from API
    */
   fetchBooks = () =>
     BooksAPI.getAll().then(

@@ -5,7 +5,7 @@ import './../App.css';
 import BookShelfChanger from './BookShelfChanger';
 
 /**
- * Outputs a single book 
+ * @description Outputs a single book 
  * @param {object} data          Book data
  * @param {func} onChangeShelf   Action to trigger when user wants to move book to different shelf
  */

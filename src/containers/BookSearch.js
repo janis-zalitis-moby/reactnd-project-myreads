@@ -8,7 +8,7 @@ import './../App.css';
 import Book from '../components/Book';
 
 /**
- * Outputs a page with search bar and results
+ * @description Outputs a page with search bar and results
  * Searches in books and displays grid of results
  */
 class BookSearch extends Component {
@@ -22,7 +22,7 @@ class BookSearch extends Component {
   componentDidMount = () => this.searchInput.focus();
 
   /**
-   * Updates search query from user input
+   * @description Updates search query from user input
    * uses callback to start fetching results
    * @param  {string} query string the user has input
    */
@@ -33,7 +33,7 @@ class BookSearch extends Component {
     ));
 
   /**
-   * Fetches search results and updates state
+   * @description Fetches search results and updates state
    */
   searchBooks = () => {
     this.setState({ loading: true });

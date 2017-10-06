@@ -5,7 +5,7 @@ import './../App.css';
 import Book from './Book';
 
 /**
- * Book shelf, displays a collection of books
+ * @description Book shelf, displays a collection of books
  * @param {string} title         Title of book shelf
  * @param {array} books          Collection of books to display
  * @param {func} onChangeShelf   Action to trigger when user wants to move book to different shelf

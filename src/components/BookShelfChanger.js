@@ -5,7 +5,7 @@ import './../App.css';
 import BookShelves from './BookShelvesConfig';
 
 /**
- * Selector used to move book between shelves
+ * @description Selector used to move book between shelves
  * @param {object} data          Book data
  * @param {func} onChangeShelf   Action to trigger when user wants to move book to different shelf
  */

@@ -7,7 +7,7 @@ import BookShelf from '../components/BookShelf';
 import BookShelves from '../components/BookShelvesConfig';
 
 /** 
- * Outputs a page with a list of books split by shelves
+ * @description Outputs a page with a list of books split by shelves
  * Uses pre-defined shelves:
  * [
  *  { currentlyReading: "Currently Reading" }
